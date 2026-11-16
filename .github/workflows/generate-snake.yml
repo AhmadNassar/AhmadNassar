@@ -1,6 +1,11 @@
 name: generate-snake
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/generate-snake.yml"
+      - ".github/scripts/animate-idle-snake.py"
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
@@ -21,8 +26,11 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/github-snake.svg
-            dist/github-snake-dark.svg
+            dist/github-snake-dark.svg?palette=github-dark
             dist/github-snake.gif
+
+      - name: Animate empty contribution grids
+        run: python3 .github/scripts/animate-idle-snake.py dist/github-snake.svg dist/github-snake-dark.svg
 
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4
