@@ -30,7 +30,8 @@ jobs:
             dist/github-snake.gif
 
       - name: Animate empty contribution grids
-        run: python3 .github/scripts/animate-idle-snake.py dist/github-snake.svg dist/github-snake-dark.svg
+        # The Docker generator creates root-owned output files.
+        run: sudo python3 .github/scripts/animate-idle-snake.py dist/github-snake.svg dist/github-snake-dark.svg
 
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4
